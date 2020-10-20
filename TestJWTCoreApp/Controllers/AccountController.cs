@@ -17,7 +17,7 @@ namespace TestJWTCoreApp.Controllers
         {
             _tokenService = tokenService;
 
-            // temp
+            // создание администратора при первом запуске (тестовые данные)
             dbContextService.CreateIfNotExists();
         }
 
@@ -27,7 +27,7 @@ namespace TestJWTCoreApp.Controllers
             var identity = _tokenService.GetIdentity(model);
             if (identity == null)
             {
-                return BadRequest(new { errorText = "Неверный логин или пароль." });
+                return BadRequest(new ErrorModel("Неверный логин или пароль."));
             }
 
             TokenResponseModel response = _tokenService.GetToken(identity);

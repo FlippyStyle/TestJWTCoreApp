@@ -4,7 +4,7 @@ using TestJWTCoreApp.Models;
 
 namespace TestJWTCoreApp.Services
 {
-    public interface IDbContextService
+    public interface IUsersService
     {
         Task<List<User>> GetUsers();
         Task<User> GetUser(int id);
@@ -12,8 +12,5 @@ namespace TestJWTCoreApp.Services
         Task UpdateUser(User user);
         Task RemoveUser(User user);
         bool IsUserExists(int id);
-        
-        //temp for initialization
-        void CreateIfNotExists();
     }
 }

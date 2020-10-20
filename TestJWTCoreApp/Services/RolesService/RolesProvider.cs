@@ -10,12 +10,12 @@ namespace TestJWTCoreApp.Services
         public List<RolesViewModel> GetRolesForView()
         {
             var result = new List<RolesViewModel>();
-            foreach (RolesTypes ee in Enum.GetValues(typeof(RolesTypes)))
+            foreach (RolesTypes roleType in Enum.GetValues(typeof(RolesTypes)))
             {
                 result.Add(new RolesViewModel
                 {
-                    Value = (int)ee,
-                    Text = EnumExtension.GetEnumDisplayName(ee)
+                    Value = (int)roleType,
+                    Text = EnumExtension.GetEnumDisplayName(roleType)
                 });
             }
 

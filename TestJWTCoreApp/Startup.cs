@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -52,8 +51,9 @@ namespace TestJWTCoreApp
             });
 
             services.AddScoped<IDbContextService, DbContextProvider>();
-            services.AddScoped<ITokenService, TokenServiceProvider>();
             services.AddScoped<IRolesService, RolesProvider>();
+            services.AddScoped<ITokenService, TokenServiceProvider>();
+            services.AddScoped<IUsersService, UsersProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

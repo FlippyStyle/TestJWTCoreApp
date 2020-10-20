@@ -10,36 +10,33 @@ namespace TestJWTCoreApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class UsersController : Controller
-    {
-        private readonly IDbContextService _dbContextService;
-        public UsersController(IDbContextService dbContextService)
+    {        
+        private readonly IUsersService _usersService;
+        public UsersController(IUsersService usersService)
         {
-            _dbContextService = dbContextService;
+            _usersService = usersService;
         }
 
         [HttpGet]
         [AuthorizeRoles(RolesTypes.Admin, RolesTypes.Editor)]
         public async Task<ActionResult<IEnumerable<User>>> Get()
         {
-            return await _dbContextService.GetUsers(); ;
+            return await _usersService.GetUsers(); ;
         }
 
-        // GET api/users/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<User>> Get(int id)
         {
-            User user = await _dbContextService.GetUser(id);
+            User user = await _usersService.GetUser(id);
             if (user == null)
                 return NotFound();
 
             return new ObjectResult(user);
         }
 
-        // POST api/users
         [HttpPost]
-        [Authorize]
         [AuthorizeRoles(RolesTypes.Admin, RolesTypes.Editor)]
         public async Task<ActionResult<User>> Post(User user)
         {
@@ -48,13 +45,11 @@ namespace TestJWTCoreApp.Controllers
                 return BadRequest();
             }
 
-            await _dbContextService.AddUser(user);
+            await _usersService.AddUser(user);
             return Ok(user);
         }
 
-        // PUT api/users/
         [HttpPut]
-        [Authorize]
         [AuthorizeRoles(RolesTypes.Admin, RolesTypes.Editor)]
         public async Task<ActionResult<User>> Put(User user)
         {
@@ -62,28 +57,26 @@ namespace TestJWTCoreApp.Controllers
             {
                 return BadRequest();
             }
-            if (!_dbContextService.IsUserExists(user.Id))
+            if (!_usersService.IsUserExists(user.Id))
             {
                 return NotFound();
             }
 
-            await _dbContextService.UpdateUser(user);
+            await _usersService.UpdateUser(user);
             return Ok(user);
         }
 
-        // DELETE api/users/5
         [HttpDelete("{id}")]
-        [Authorize]
         [AuthorizeRoles(RolesTypes.Admin)]
         public async Task<ActionResult<User>> Delete(int id)
         {
-            User user = await _dbContextService.GetUser(id);
+            User user = await _usersService.GetUser(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            await _dbContextService.RemoveUser(user);
+            await _usersService.RemoveUser(user);
             return Ok(user);
         }
     }
